@@ -25,6 +25,19 @@ router.get('/', function(req, res) {
 	res.json({ message: 'abc' });
 });
 
+router.route('/bears')
+	.post(function(req, res) { // Create a bear
+		var bear = new Bear();
+		bear.name = req.body.name;
+
+		bear.save(function(err) {
+			consol.log(err);
+			if(err)
+				res.send(err);
+			res.json({ message: 'Bear created!' });
+		});
+	});
+
 app.use('/api', router); // all of our routes will be prefixed with /api
 
 app.listen(port); // Start the server
